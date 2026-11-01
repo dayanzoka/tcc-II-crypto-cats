@@ -1,0 +1,25 @@
+# Godot 4
+.godot/
+/android/
+export.cfg
+export_presets.cfg
+*.translation
+
+# Binarios exportados
+build/
+dist/
+
+# Arquivos locais de maquina
+*.tmp
+*.log
+
+# Modelos e checkpoints de aprendizado por reforco
+*.onnx
+*.pth
+*.ckpt
+/modelos/
+/runs/
+
+# Credenciais locais do back-end: nunca versionar (ver back/.gitignore)
+local-dev.env.ps1
+back/target/
