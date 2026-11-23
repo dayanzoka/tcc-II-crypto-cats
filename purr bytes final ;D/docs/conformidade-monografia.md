@@ -131,8 +131,9 @@ como a seção 2.1 especifica. Os casos TC-01 a TC-04 foram refeitos sobre ele.
    (`AMOSTRA_DESEMPENHO`), não a rota.
 4. **Arte do labirinto:** oito cenários por fase (jardim, outono, cerejeira, lago, inverno,
    ruínas, bosque e lavanda) e porta em arco de pedra (ADR 0035). Os personagens já têm a
-   arte final (gatos amarelo, cálico e siamês autorais; husky e caramelo, ADR 0020, 0022,
-   0024 e 0030).
+   arte final: gatos amarelo, cálico e siamês autorais (ADR 0024 e 0030); cachorros husky
+   e pastor, misturados em toda fase (ADR 0037 e 0042); itens dos pacotes (novelo, peixe e
+   rato, ADR 0043).
 5. **Validação com usuários** (pré/pós-teste, análise estatística) acontece fora do jogo;
    antes da coleta, jogar uma partida completa na máquina da escola e conferir o painel de
    diagnóstico.

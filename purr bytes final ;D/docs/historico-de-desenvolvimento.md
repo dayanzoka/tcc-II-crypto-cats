@@ -980,3 +980,11 @@ outros 25 arquivos de teste do projeto.
   equipe (novelo, peixe de olho preto e rato), revezando pela ordem dos pacotes
   (ADR 0043). As prévias dos cenários foram geradas de novo.
 - Suíte: 343 testes, 3.305 verificações, 0 falhas.
+
+## 2026-11-22 — Vinhas no tom do wallpaper
+
+- A vinha da moldura dos cartões passou a acompanhar o wallpaper da galeria, como na
+  apresentação do piquenique (ADR 0044). O brejo continua verde. Na noite e no céu a
+  vinha é azul, na estufa verde-água, no lago das carpas laranja e no piquenique
+  marrom. As flores e o logo não mudam.
+- Suíte: 345 testes, 3.429 verificações, 0 falhas.

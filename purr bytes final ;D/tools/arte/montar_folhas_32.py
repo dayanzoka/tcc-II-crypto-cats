@@ -5,19 +5,17 @@ tools/arte/originais/cachorro_pastor/, e sai em recursos/arte/cachorro_pastor.pn
 
 Desde a ADR 0037 o husky e o desenho novo da equipe, entregue ja no tamanho
 do jogo (1 pixel de arte = 1 pixel, quadros soltos em
-tools/arte/originais/cachorro_husky_v2/). A pelagem caramelo saiu por
-enquanto: a versao marrom no traco novo ainda vai ser desenhada, e ate la o
-vigia "caramelo" usa o husky (ver PelagemCachorro). As funcoes da versao
-antiga (1024x1024 ampliada 32x) ficaram aqui para quando ela chegar no mesmo
-formato.
+tools/arte/originais/cachorro_husky_v2/). O pastor veio no mesmo formato. O
+antigo vigia "caramelo" e desenhado como o pastor (ver PelagemCachorro). As
+funcoes da versao antiga (1024x1024 ampliada 32x, reduzir) ficaram aqui como
+historico.
 
     python tools/arte/montar_folhas_32.py
 
-Entrada: os quadros soltos que a artista entregou, em
-tools/arte/originais/cachorro_husky/ e cachorro_caramelo/
-(PNG 1024x1024, pixel art 32x32 ampliada 32x, fundo transparente).
+Entrada: os quadros soltos da equipe, em tools/arte/originais/cachorro_husky_v2/
+e cachorro_pastor/ (no tamanho do jogo, fundo transparente).
 
-Saida: recursos/arte/cachorro.png e cachorro_caramelo.png, uma linha por
+Saida: recursos/arte/cachorro.png e cachorro_pastor.png, uma linha por
 animacao e quadros de 32x32. Depois rode tools/gerar_sprite_frames.gd no Godot
 para atualizar os SpriteFrames.
 

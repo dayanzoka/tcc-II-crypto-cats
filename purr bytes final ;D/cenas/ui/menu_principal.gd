@@ -105,6 +105,8 @@ func aplicar_fundo(fundo: String) -> void:
 			var copia: StyleBoxTexture = tema.get_stylebox(estado, &"Button").duplicate() as StyleBoxTexture
 			copia.texture = balao
 			(botao as Button).add_theme_stylebox_override(estado, copia)
+	# A vinha em volta do cartao muda de cor junto com o fundo (ADR 0044).
+	($Moldura as MolduraDeVinhas).definir_fundo(_fundo_atual)
 	$Galeria.tooltip_text = "trocar o fundo (agora: %s)" % GaleriaDeFundos.nome(_fundo_atual)
 	_vestir_botao_da_galeria()
 

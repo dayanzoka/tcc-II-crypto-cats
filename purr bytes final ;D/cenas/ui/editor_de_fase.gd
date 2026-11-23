@@ -189,11 +189,9 @@ func _adicionar_vigia(cor: Color = _COR_PADRAO_DO_VIGIA, comando: String = "",
 	seletor.name = "Cor"
 	linha.add_child(seletor)
 
-	# Pelagem do desenho (ADR 0022 e 0037). Vigia novo alterna pela posicao,
-	# como o jogo faz com fases que nao escolhem. A pelagem guardada fica no
-	# proprio seletor: uma pelagem que saiu do editor por enquanto (o caramelo,
-	# ate o desenho marrom novo ficar pronto) nao e trocada ao salvar. Com uma
-	# pelagem so, o seletor nem aparece.
+	# Pelagem guardada no JSON (ADR 0022 e 0042). O jogo alterna husky e pastor
+	# sozinho, entao o seletor fica escondido: ele so guarda o valor que a fase
+	# ja trazia (ou a alternancia, num vigia novo) para salvar a fase igual.
 	var seletor_pelagem := OptionButton.new()
 	seletor_pelagem.theme_type_variation = &"OpcaoCompacta"
 	seletor_pelagem.name = "Pelagem"

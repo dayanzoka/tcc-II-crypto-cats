@@ -94,6 +94,66 @@ func teste_texto_branco_le_bem_em_todos_os_fundos() -> void:
 		afirmar_verdadeiro(contraste >= 4.5, "%s: contraste do texto branco %.1f (minimo 4,5)" % [fundo, contraste])
 
 
+## A vinha da moldura acompanha o wallpaper (ADR 0044): cada fundo tem a sua
+## cor, o brejo continua com o verde do logo, o piquenique e marrom como nos
+## slides, e as flores nao mudam.
+func teste_cada_fundo_tem_sua_vinha() -> void:
+	var verde_do_logo := PackedColorArray([Color8(79, 137, 65), Color8(115, 164, 41), Color8(139, 181, 24)])
+	afirmar_igual(GaleriaDeFundos.cores_das_vinhas("brejo"), verde_do_logo, "brejo: o verde original do logo")
+	var marrom: Color = GaleriaDeFundos.cores_das_vinhas("piquenique")[0]
+	afirmar_verdadeiro(marrom.r > marrom.g and marrom.g > marrom.b, "piquenique: vinha marrom")
+	afirmar_igual(GaleriaDeFundos.cores_das_vinhas("desconhecido"), verde_do_logo, "fundo desconhecido: o padrao")
+
+	var vinhas: Dictionary = {}
+	var arte := Vector2i(120, 80)
+	for fundo: String in GaleriaDeFundos.ORDEM:
+		var cores: PackedColorArray = GaleriaDeFundos.cores_das_vinhas(fundo)
+		afirmar_igual(cores.size(), 3, "%s: vinha, folha escura e folha clara" % fundo)
+		vinhas[cores[0].to_html()] = true
+		# A vinha e o contorno: o tom mais escuro dos tres.
+		afirmar_verdadeiro(cores[0].get_luminance() < cores[1].get_luminance()
+			and cores[1].get_luminance() < cores[2].get_luminance(), "%s: as folhas clareiam a partir da vinha" % fundo)
+		var usadas: Dictionary = _cores_da_imagem(MolduraDeVinhas.desenhar(arte, fundo))
+		for cor: Color in cores:
+			afirmar_verdadeiro(usadas.has(cor.to_html()), "%s: a moldura usa %s" % [fundo, cor.to_html(false)])
+		for outro: String in GaleriaDeFundos.ORDEM:
+			if outro != fundo:
+				afirmar_falso(usadas.has(GaleriaDeFundos.cores_das_vinhas(outro)[0].to_html()),
+					"%s: sem a vinha de %s" % [fundo, outro])
+		for flor: Color in MolduraDeVinhas.CORES_DAS_FLORES.values():
+			afirmar_verdadeiro(usadas.has(flor.to_html()), "%s: as flores do logo continuam" % fundo)
+	afirmar_igual(vinhas.size(), GaleriaDeFundos.ORDEM.size(), "cada fundo com uma vinha diferente")
+	afirmar_verdadeiro(MolduraDeVinhas.textura(arte, "noite") == MolduraDeVinhas.textura(arte, "noite"),
+		"cada tamanho e fundo e desenhado uma vez so")
+	afirmar_verdadeiro(MolduraDeVinhas.textura(arte, "noite") != MolduraDeVinhas.textura(arte, "ceu"),
+		"fundos diferentes, molduras diferentes")
+
+
+func teste_trocar_o_fundo_no_menu_troca_a_vinha() -> void:
+	GaleriaDeFundos.salvar("brejo")
+	var menu: Control = await _abrir("res://cenas/ui/menu_principal.tscn") as Control
+	var moldura: MolduraDeVinhas = menu.get_node("Moldura") as MolduraDeVinhas
+	await get_tree().process_frame
+	afirmar_verdadeiro(_cores_da_imagem(moldura.textura_atual().get_image()).has(
+		GaleriaDeFundos.cores_das_vinhas("brejo")[0].to_html()), "comeca com a vinha verde")
+	menu.call("_ao_trocar_fundo")
+	afirmar_igual(moldura.fundo_em_uso(), "noite", "a galeria passou para a noite")
+	var usadas: Dictionary = _cores_da_imagem(moldura.textura_atual().get_image())
+	afirmar_verdadeiro(usadas.has(GaleriaDeFundos.cores_das_vinhas("noite")[0].to_html()), "a vinha ficou azul")
+	afirmar_falso(usadas.has(GaleriaDeFundos.cores_das_vinhas("brejo")[0].to_html()), "e o verde saiu")
+	menu.free()
+
+
+func _cores_da_imagem(imagem: Image) -> Dictionary:
+	var cores: Dictionary = {}
+	for y: int in imagem.get_height():
+		for x: int in imagem.get_width():
+			var cor: Color = imagem.get_pixel(x, y)
+			if cor.a > 0.0:
+				cores[cor.to_html()] = true
+	return cores
+
+
 func _luminancia(cor: Color) -> float:
 	var canais: Array[float] = []
 	for c: float in [cor.r, cor.g, cor.b]:

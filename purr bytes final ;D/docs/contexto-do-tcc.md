@@ -50,7 +50,7 @@ segurança cibernética** a públicos com pouco conhecimento técnico.
 - **Escolha do gatinho** (e em seguida do cenário) antes de cada fase: amarelo (gato base), cálico ou siamês. A arte é autoral da equipe, e o jogo lembra a escolha.
   - Parado, o gato continua virado para onde andava. Depois de 5 s ele senta, e 2 s depois dorme.
   - A pelagem é só cosmética e não muda regras nem métricas.
-- Os cachorros usam o **husky novo** desenhado pela equipe (ADR 0037, 21/11/2026); quando param, sentam. A pelagem **caramelo** (marrom) está em espera até a versão no traço novo ficar pronta: vigias marcados "caramelo" aparecem como husky e voltam a ser marrons sozinhos quando a arte chegar.
+- Os cachorros são o **husky** e o **pastor**, desenhados pela equipe no traço novo (ADR 0037 e 0042); quando param, sentam. Toda fase alterna husky, pastor, husky... pela ordem dos vigias, sem escolha no editor. O valor antigo "caramelo" é desenhado como o pastor.
 
 **Teclas:**
 
@@ -88,7 +88,7 @@ segurança cibernética** a públicos com pouco conhecimento técnico.
 
 - O logo "Crypto Cats" foi desenhado pela Dayane, com letras brancas, vinhas e flores.
 - Um siamês deitado abana o rabo em loop, indo e voltando (ADR 0039, 21/11/2026). Ele entrou no lugar do gatinho amarelo, que já tinha substituído os três sprites antigos. A capa da apresentação do TCC II usa o mesmo siamês, sobre o wallpaper do céu.
-- O cartão é transparente e com blur, sem contorno preto, emoldurado por vinhas e flores.
+- O cartão é transparente e com blur, sem contorno preto, emoldurado por vinhas e flores. A cor da vinha segue o wallpaper (verde no brejo, azul na noite e no céu, verde-água na estufa, laranja nas carpas, marrom no piquenique), e as flores não mudam (ADR 0044).
 - Todo o texto é **branco, sem contorno**. A linha "letramento digital e criptografia" foi removida.
 - O **botão de galeria**, no canto superior direito, troca o wallpaper a cada toque entre 6 fundos: brejo, noite, estufa, carpas, piquenique e céu. A cor dos balões dos botões muda junto. As outras telas acompanham o fundo escolhido.
 - Os wallpapers são de terceiros e têm atribuição na legenda da figura. **Pendente: confirmar os créditos e a permissão de uso.**
@@ -135,12 +135,12 @@ segurança cibernética** a públicos com pouco conhecimento técnico.
 - O **painel de telemetria** no jogo tem visão geral, fases jogadas (com seleção múltipla) e detalhe da fase, e exporta em JSON.
 
 **Testes:**
-- Suíte nativa, sem addon: **333 testes, 49 arquivos, tudo verde** (a monografia ainda cita 311 testes e 2.304 verificações, os números da época da revisão).
+- Suíte nativa, sem addon: **345 testes, 3.429 verificações, 52 arquivos, tudo verde** (a monografia ainda cita 311 testes e 2.304 verificações, os números da época da revisão).
 - Os casos TC-01 a TC-04 da monografia estão em `tests/teste_casos_monografia.gd`.
 - A API tem testes próprios (`mvn test`). **Pendente: a equipe rodar `mvn test` na máquina.**
 
 **Decisões registradas:**
-- São 38 ADRs em `docs/decisoes/` (0001 A* até 0038 cenário até a borda da tela).
+- São 44 ADRs em `docs/decisoes/` (0001 A* até 0044 vinhas no tom do wallpaper).
 - Outros documentos: `docs/conformidade-monografia.md`, `docs/contrato-telemetria.md`, `docs/gramatica.md` e `docs/historico-de-desenvolvimento.md`.
 
 ---
@@ -151,7 +151,7 @@ segurança cibernética** a públicos com pouco conhecimento técnico.
 - Deck de 15 slides no tema do jogo (moldura de vinhas, siamês abanando a cauda na capa, paleta no azul clarinho dos botões do céu, wallpaper do céu na capa e nos slides finais, prints e prévias dos cenários), com notas do apresentador e tempo de cada slide.
 - Estrutura baseada no deck do TCC I: capa, contexto/problema/solução, objetivos, metodologia, como o jogo ensina, trilha de 5 fases, terminal, A*, arquitetura, autoria e telemetria, correlatos, verificação, conclusão, roteiro da demonstração (20 min) e agradecimento.
 - Existem duas versões do deck com o mesmo conteúdo: a do **céu** (paleta azul clarinha dos botões) e a do **piquenique** (paleta marrom dos botões, wallpaper do piquenique na capa e nos slides finais).
-- O slide de verificação usa os números atuais (333 testes, 3.231 verificações); a monografia ainda cita 311.
+- O slide de verificação usa os números da época dos slides (333 testes, 3.231 verificações); a suíte hoje tem 345 testes e 3.429 verificações, e a monografia ainda cita 311.
 
 ---
 
@@ -297,4 +297,5 @@ perfil `dev`.
 - Os cachorros não dão meia-volta no corredor e não sobem no gato quando não podem pegá-lo (ADR 0040).
 - A entrada do labirinto está sempre num ciclo, para o gato poder fugir (ADR 0041).
 - Pacotes: novelo, peixe (olho preto) e rato, revezando pela ordem dos pacotes (ADR 0043).
-- Suíte: 343 testes, 3.305 verificações, 0 falhas.
+- Vinhas da moldura no tom do wallpaper (ADR 0044).
+- Suíte: 345 testes, 3.429 verificações, 0 falhas.

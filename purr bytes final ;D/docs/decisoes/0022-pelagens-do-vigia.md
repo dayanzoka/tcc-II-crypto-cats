@@ -1,6 +1,6 @@
 # ADR 0022 — Duas pelagens para o vigia: husky e caramelo
 
-**Data:** 2026-11-09 · **Situação:** aceita
+**Data:** 2026-11-09 · **Situação:** aceita; a arte mudou nas ADR 0037 e 0042 (hoje as pelagens são husky e pastor, alternadas em toda fase, e o caramelo é desenhado como o pastor)
 
 ## Contexto
 
