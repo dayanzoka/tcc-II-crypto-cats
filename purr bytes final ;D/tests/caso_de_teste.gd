@@ -153,6 +153,8 @@ func afirmar_vidro_com_vinhas(cartao: Control, mensagem: String) -> bool:
 		ok = afirmar_igual(moldura.cartao, cartao, "%s: a moldura contorna este cartao" % mensagem) and ok
 		ok = afirmar_verdadeiro(moldura.get_index() > cartao.get_index(),
 			"%s: a moldura fica por cima da borda do vidro" % mensagem) and ok
+		ok = afirmar_igual(moldura.fundo_em_uso(), GaleriaDeFundos.atual(),
+			"%s: a vinha nas cores do fundo escolhido (ADR 0044)" % mensagem) and ok
 	return ok
 
 

@@ -17,6 +17,11 @@ extends Control
 ##
 ## Uso: irma do cartao, logo depois dele na arvore (para ficar por cima da
 ## borda do vidro), com `cartao` apontando para ele. EnfeiteDaGaleria faz isso.
+##
+## A cor da vinha e das folhas acompanha o wallpaper escolhido na galeria
+## (ADR 0044): verde no brejo, marrom no piquenique, azul na noite e no ceu,
+## verde-agua na estufa e laranja no lago das carpas. As cores ficam em
+## GaleriaDeFundos.VINHAS; as flores sao sempre as do logo.
 
 ## Pixels da tela base (640x360) por pixel de arte.
 const ESCALA: int = 2
@@ -26,10 +31,7 @@ const SOBRA: int = 6
 const RAIO: int = 7
 const SEMENTE: int = 31
 
-## Cores tiradas do logo da equipe.
-const VINHA: Color = Color8(79, 137, 65)
-const FOLHA_ESCURA: Color = Color8(115, 164, 41)
-const FOLHA_CLARA: Color = Color8(139, 181, 24)
+## Cores das flores, tiradas do logo da equipe (iguais em todos os fundos).
 const CORES_DAS_FLORES: Dictionary = {
 	"r": Color8(212, 70, 83),
 	"p": Color8(229, 113, 124),
@@ -44,6 +46,8 @@ const FLOR_VERMELHA_DEITADA: PackedStringArray = [".r.", "pyr", ".r."]
 const FLOR_AZUL: PackedStringArray = [".bB", "BoB", "Bb."]
 
 @export var cartao: Control
+## Fundo da galeria cujas cores a vinha usa. Vazio: o fundo atual da galeria.
+@export var fundo: String = ""
 
 static var _cache: Dictionary = {}
 
@@ -68,7 +72,7 @@ func _ajustar() -> void:
 		_textura = null
 		queue_redraw()
 		return
-	_textura = textura(arte)
+	_textura = textura(arte, fundo_em_uso())
 	var sobra: Vector2 = Vector2.ONE * SOBRA * ESCALA
 	size = Vector2(_textura.get_size()) * ESCALA
 	global_position = cartao.global_position - sobra
@@ -84,20 +88,32 @@ func textura_atual() -> Texture2D:
 	return _textura
 
 
+## Troca as cores da vinha (o menu chama ao passar para o proximo fundo).
+func definir_fundo(novo: String) -> void:
+	fundo = novo
+	_ajustar()
+
+
+func fundo_em_uso() -> String:
+	return fundo if GaleriaDeFundos.conhece(fundo) else GaleriaDeFundos.atual()
+
+
 ## Tamanho do cartao em pixels de arte (o cartao e medido em pixels da tela base).
 static func tamanho_em_arte(tamanho: Vector2) -> Vector2i:
 	return Vector2i(roundi(tamanho.x / ESCALA), roundi(tamanho.y / ESCALA))
 
 
-## A moldura de um cartao de `arte` pixels de arte, ja com a sobra dos lados.
-static func textura(arte: Vector2i) -> Texture2D:
-	if not _cache.has(arte):
-		_cache[arte] = ImageTexture.create_from_image(desenhar(arte))
-	return _cache[arte] as Texture2D
+## A moldura de um cartao de `arte` pixels de arte, ja com a sobra dos lados,
+## nas cores do fundo pedido. Uma textura por tamanho e por fundo.
+static func textura(arte: Vector2i, fundo_da_galeria: String = GaleriaDeFundos.PADRAO) -> Texture2D:
+	var chave: String = "%d,%d,%s" % [arte.x, arte.y, fundo_da_galeria]
+	if not _cache.has(chave):
+		_cache[chave] = ImageTexture.create_from_image(desenhar(arte, fundo_da_galeria))
+	return _cache[chave] as Texture2D
 
 
-static func desenhar(arte: Vector2i) -> Image:
-	return _Desenho.new(arte).imagem
+static func desenhar(arte: Vector2i, fundo_da_galeria: String = GaleriaDeFundos.PADRAO) -> Image:
+	return _Desenho.new(arte, GaleriaDeFundos.cores_das_vinhas(fundo_da_galeria)).imagem
 
 
 ## O desenho em si (port de tools/arte/montar_logo_e_vinhas.py, versao 1).
@@ -108,8 +124,14 @@ class _Desenho:
 	var total: float
 	var voltas: int
 	var sorteio := RandomNumberGenerator.new()
+	var vinha: Color
+	var folha_escura: Color
+	var folha_clara: Color
 
-	func _init(arte: Vector2i) -> void:
+	func _init(arte: Vector2i, cores: PackedColorArray) -> void:
+		vinha = cores[0]
+		folha_escura = cores[1]
+		folha_clara = cores[2]
 		largura = arte.x
 		altura = arte.y
 		sorteio.seed = SEMENTE
@@ -165,7 +187,7 @@ class _Desenho:
 		var s: float = 0.0
 		while s < total:
 			var p: Vector2 = _ponto(s)
-			_pintar(p.x, p.y, VINHA)
+			_pintar(p.x, p.y, vinha)
 			s += 0.2
 
 	# 2) gavinhas: raminhos curtos que saem da vinha em diagonal, terminando
@@ -176,7 +198,7 @@ class _Desenho:
 		while s < total - 4.0:
 			for passo: int in range(1, 4):
 				var p: Vector2 = _ponto(s + passo * 0.9, (1.0 + passo) * lado)
-				_pintar(p.x, p.y, VINHA if passo < 3 else FOLHA_CLARA)
+				_pintar(p.x, p.y, vinha if passo < 3 else folha_clara)
 			lado = -lado
 			s += sorteio.randf_range(11.0, 17.0)
 
@@ -185,7 +207,7 @@ class _Desenho:
 		var s: float = 1.0
 		var lado: int = 1
 		while s < total:
-			var cor: Color = FOLHA_CLARA if sorteio.randf() < 0.55 else FOLHA_ESCURA
+			var cor: Color = folha_clara if sorteio.randf() < 0.55 else folha_escura
 			var p: Vector2 = _ponto(s + 0.6, 1.4 * lado)
 			_pintar(p.x, p.y, cor)
 			if sorteio.randf() < 0.6:

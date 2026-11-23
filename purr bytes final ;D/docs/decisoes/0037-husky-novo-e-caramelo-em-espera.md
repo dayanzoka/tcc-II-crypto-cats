@@ -1,7 +1,8 @@
 # ADR 0037 — Husky novo e caramelo em espera
 
 **Data:** 2026-11-21 · **Situação:** aceita (troca a arte da ADR 0020; suspende a pelagem
-caramelo da ADR 0022 até a arte nova)
+caramelo da ADR 0022 até a arte nova). A espera acabou na ADR 0042: o pastor ocupa o lugar do
+cachorro marrom
 
 ## Contexto
 

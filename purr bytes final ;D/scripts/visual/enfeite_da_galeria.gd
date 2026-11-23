@@ -19,13 +19,14 @@ const GRUPO_DAS_MOLDURAS: StringName = &"moldura_de_vinhas"
 static func enfeitar(raiz: Control, cartoes: Array[Control], fundo: String = "") -> void:
 	raiz.theme = TemaDaGaleria.tema(fundo)
 	for cartao: Control in cartoes:
-		vidro(cartao)
+		vidro(cartao, fundo)
 
 
 ## Vidro fosco + moldura de vinhas num cartao. O cartao continua sendo o mesmo
 ## no: so ganha o material, perde o estilo fixo que tinha na cena (o painel
-## passa a vir do tema, com a tinta do fundo) e ganha a moldura como irma.
-static func vidro(cartao: Control) -> MolduraDeVinhas:
+## passa a vir do tema, com a tinta do fundo) e ganha a moldura como irma, com
+## a vinha nas cores do mesmo fundo (ADR 0044).
+static func vidro(cartao: Control, fundo: String = "") -> MolduraDeVinhas:
 	cartao.material = MATERIAL_DO_VIDRO
 	cartao.remove_theme_stylebox_override(&"panel")
 	var pai: Node = cartao.get_parent()
@@ -43,6 +44,7 @@ static func vidro(cartao: Control) -> MolduraDeVinhas:
 	var moldura := MolduraDeVinhas.new()
 	moldura.name = "%sMoldura" % cartao.name
 	moldura.cartao = cartao
+	moldura.fundo = fundo
 	moldura.add_to_group(GRUPO_DAS_MOLDURAS)
 	pai.add_child(moldura)
 	pai.move_child(moldura, cartao.get_index() + 1)

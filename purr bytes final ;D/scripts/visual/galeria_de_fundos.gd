@@ -47,6 +47,21 @@ const TINTAS: Dictionary = {
 	"ceu": Color(0.13, 0.26, 0.35, 0.68),
 }
 
+## Cores da moldura de vinhas de cada fundo (ADR 0044): vinha, folha escura e
+## folha clara, nessa ordem. O brejo fica com o verde do logo; nos outros a
+## vinha acompanha o wallpaper, como na apresentacao do piquenique, em que as
+## folhas viraram marrons para combinar com a toalha. A vinha e sempre o tom
+## mais escuro (o contorno que desenha a moldura) e as folhas clareiam a partir
+## dele. As flores (vermelha e azul, do logo) nao mudam.
+const VINHAS: Dictionary = {
+	"brejo": [Color8(79, 137, 65), Color8(115, 164, 41), Color8(139, 181, 24)],
+	"noite": [Color8(52, 84, 130), Color8(86, 126, 178), Color8(140, 180, 226)],
+	"estufa": [Color8(38, 110, 88), Color8(72, 150, 118), Color8(128, 196, 160)],
+	"carpas": [Color8(176, 88, 36), Color8(227, 139, 59), Color8(246, 184, 110)],
+	"piquenique": [Color8(122, 82, 50), Color8(156, 116, 77), Color8(190, 146, 96)],
+	"ceu": [Color8(70, 120, 150), Color8(113, 161, 187), Color8(170, 208, 228)],
+}
+
 const _SECAO: String = "menu"
 const _CHAVE: String = "fundo"
 
@@ -80,6 +95,11 @@ static func tom(fundo: String) -> Color:
 ## Cor (com alfa) que o vidro fosco mistura ao fundo desfocado.
 static func tinta(fundo: String) -> Color:
 	return TINTAS.get(fundo, TINTAS[PADRAO]) as Color
+
+
+## Vinha, folha escura e folha clara da moldura deste fundo.
+static func cores_das_vinhas(fundo: String) -> PackedColorArray:
+	return PackedColorArray(VINHAS.get(fundo, VINHAS[PADRAO]) as Array)
 
 
 static func seguinte(fundo: String) -> String:

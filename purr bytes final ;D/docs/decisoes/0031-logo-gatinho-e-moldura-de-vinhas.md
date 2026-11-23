@@ -1,7 +1,8 @@
 # ADR 0031 — Logo, gatinho mexendo o rabo e moldura de vinhas no menu
 
 **Data:** 2026-11-15 · **Situação:** aceita (no menu, substitui o título em texto e os
-três bichinhos parados das ADR 0024 e 0030, e o contorno do cartão da ADR 0023)
+três bichinhos parados das ADR 0024 e 0030, e o contorno do cartão da ADR 0023). O gatinho
+do menu passou a ser o siamês na ADR 0039
 
 ## Contexto
 
